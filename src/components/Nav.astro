@@ -1,0 +1,192 @@
+---
+import { siteConfig } from "../config";
+const navLinks = [
+  { name: "About", href: "#about" },
+  { name: "Skills", href: "#skills" },
+  { name: "Projects", href: "#projects" },
+  { name: "Experience", href: "#experience" },
+  { name: "Education", href: "#education" },
+  { name: "Contact", href: "#contact" },
+];
+---
+
+<header class="fixed top-0 left-0 right-0 z-50 bg-[#0f1419]/95 backdrop-blur-sm border-b border-[#2d3748]">
+  <div class="max-w-[1600px] mx-auto px-6 md:px-12 lg:px-24 h-20 flex items-center justify-between">
+    
+    {/* Logo */}
+    <a 
+      href="/" 
+      class="group text-xl font-black tracking-tight transition-all"
+    >
+      <span class="text-[#64ffda] group-hover:text-white transition-colors">
+        Swallieu
+      </span>
+    </a>
+
+    {/* Desktop Navigation */}
+    <nav class="hidden lg:flex items-center gap-8">
+      <ul class="flex items-center gap-6">
+        {navLinks.map((link, index) => (
+          <li>
+            <a
+              href={link.href}
+              class="group flex items-center gap-2 text-[#a8b2d1] hover:text-[#64ffda] text-sm font-semibold tracking-wide transition-colors"
+            >
+              <span class="text-[#64ffda]/50 group-hover:text-[#64ffda] font-mono text-xs transition-colors">
+                0{index + 1}.
+              </span>
+              <span>{link.name}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+      
+      {/* Resume Button */}
+      <a
+        href="/resume.pdf"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="px-5 py-2.5 border-2 border-[#64ffda] text-[#64ffda] hover:bg-[#64ffda]/10 rounded-lg text-sm font-bold transition-all hover:shadow-lg hover:shadow-[#64ffda]/20"
+      >
+        Resume
+      </a>
+    </nav>
+
+    {/* Mobile Menu Button */}
+    <button 
+      id="mobile-menu-button"
+      class="lg:hidden p-2 text-[#64ffda] hover:text-white transition-colors" 
+      aria-label="Toggle navigation menu"
+      aria-expanded="false"
+    >
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path class="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+        <path class="close-icon hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </button>
+  </div>
+
+  {/* Mobile Navigation */}
+  <nav 
+    id="mobile-menu"
+    class="lg:hidden hidden bg-[#1e2532]/95 backdrop-blur-xl border-t border-[#2d3748]"
+  >
+    <ul class="px-6 py-8 space-y-4">
+      {navLinks.map((link, index) => (
+        <li>
+          <a
+            href={link.href}
+            class="mobile-menu-link flex items-center gap-3 px-4 py-3 rounded-lg text-[#a8b2d1] hover:text-[#64ffda] hover:bg-[#0f1419] transition-all group"
+          >
+            <span class="text-[#64ffda]/50 group-hover:text-[#64ffda] font-mono text-sm font-semibold transition-colors">
+              0{index + 1}.
+            </span>
+            <span class="text-lg font-semibold">{link.name}</span>
+          </a>
+        </li>
+      ))}
+      <li class="pt-4">
+        <a
+          href="/resume.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex items-center justify-center w-full px-6 py-3 border-2 border-[#64ffda] text-[#64ffda] hover:bg-[#64ffda]/10 rounded-lg font-bold transition-all"
+        >
+          View Resume
+        </a>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+<script>
+  // Mobile menu toggle
+  const menuButton = document.getElementById('mobile-menu-button');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const menuIcon = menuButton?.querySelector('.menu-icon');
+  const closeIcon = menuButton?.querySelector('.close-icon');
+
+  menuButton?.addEventListener('click', () => {
+    const isExpanded = menuButton.getAttribute('aria-expanded') === 'true';
+    
+    menuButton.setAttribute('aria-expanded', String(!isExpanded));
+    mobileMenu?.classList.toggle('hidden');
+    menuIcon?.classList.toggle('hidden');
+    closeIcon?.classList.toggle('hidden');
+  });
+
+  // Close mobile menu when clicking on a link
+  const mobileMenuLinks = document.querySelectorAll('.mobile-menu-link');
+  mobileMenuLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu?.classList.add('hidden');
+      menuIcon?.classList.remove('hidden');
+      closeIcon?.classList.add('hidden');
+      menuButton?.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  // Add scroll effect to navbar
+  let lastScroll = 0;
+  const header = document.querySelector('header');
+
+  window.addEventListener('scroll', () => {
+    const currentScroll = window.pageYOffset;
+    
+    if (currentScroll <= 0) {
+      header?.classList.remove('scroll-up');
+      return;
+    }
+    
+    if (currentScroll > lastScroll && !header?.classList.contains('scroll-down')) {
+      // Scrolling down
+      header?.classList.remove('scroll-up');
+      header?.classList.add('scroll-down');
+    } else if (currentScroll < lastScroll && header?.classList.contains('scroll-down')) {
+      // Scrolling up
+      header?.classList.remove('scroll-down');
+      header?.classList.add('scroll-up');
+    }
+    
+    lastScroll = currentScroll;
+  });
+
+  // Active section highlighting
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('a[href^="#"]');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      const sectionHeight = section.clientHeight;
+      if (pageYOffset >= sectionTop - 200) {
+        current = section.getAttribute('id') || '';
+      }
+    });
+
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === `#${current}`) {
+        link.classList.add('active');
+      }
+    });
+  });
+</script>
+
+<style>
+  .scroll-down {
+    transform: translateY(-100%);
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .scroll-up {
+    transform: translateY(0);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  a.active span:last-child {
+    color: #64ffda;
+  }
+</style>

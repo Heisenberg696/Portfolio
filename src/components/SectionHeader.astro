@@ -1,0 +1,15 @@
+---
+const { title, number } = Astro.props;
+---
+
+<div class="flex items-center gap-4 mb-12">
+  {number && (
+    <span class="text-2xl md:text-3xl font-bold font-mono text-[#64ffda] flex-shrink-0">
+      {number}.
+    </span>
+  )}
+  <h2 class="text-[clamp(26px,5vw,32px)] font-bold text-white tracking-tight whitespace-nowrap">
+    {title}
+  </h2>
+  <div class="hidden md:block h-px flex-1 bg-[#2d3748] max-w-xs"></div>
+</div>

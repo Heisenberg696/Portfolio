@@ -188,6 +188,18 @@ export const siteConfig = {
 
   experience: [
     {
+      company: "CLA 360",
+      title: "Software Engineer",
+      dateRange: "October 2025 - Present",
+      description:
+        "Contributed in building a scalable full stack application React and php",
+      responsibilities: [
+        "Developed a Credential Wallet that enables students to securely store and verify academic documents and transcripts.",
+        "Collaborated with cross-functional engineers to integrate the Credential Wallet as a standalone module within the wider CLA 360 platform.",
+        "Built and maintained core frontend features for CLA 360 using React, Next.js, TypeScript, and Zustand, ensuring scalability and clean state management.",
+      ],
+    },
+    {
       company: "Solfa Africa",
       title: "Software Engineer",
       dateRange: "Feb 2025 - Aug 2025",

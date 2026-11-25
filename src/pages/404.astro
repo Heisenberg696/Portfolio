@@ -1,0 +1,53 @@
+---
+import Nav from "../components/Nav.astro";
+import SkipLink from "../components/SkipLink.astro";
+import Footer from "../components/Footer.astro";
+import CommandPalette from "../components/CommandPalette.astro";
+import { siteConfig } from "../config";
+import "../styles/global.css";
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={siteConfig.description} />
+    <title>Page not found | {siteConfig.name}</title>
+  </head>
+
+  <body>
+    <SkipLink />
+    <Nav />
+
+    <main id="main-content" tabindex="-1">
+      <section class="mx-auto w-full max-w-[720px] px-5 py-8">
+        <h1 class="sr-only">Page not found</h1>
+
+        <div
+          role="region"
+          aria-label="Terminal showing page not found"
+          class="overflow-hidden rounded-lg border border-accent-line bg-surface shadow-[0_0_40px_var(--accent-glow)]"
+        >
+          <div class="flex items-center gap-2 border-b border-line px-6 py-3">
+            <span class="h-2 w-2 rounded-full bg-muted" aria-hidden="true"></span>
+            <span class="h-2 w-2 rounded-full bg-muted" aria-hidden="true"></span>
+            <span class="h-2 w-2 rounded-full bg-muted" aria-hidden="true"></span>
+            <span class="ml-2 font-mono text-small text-muted">~/portfolio</span>
+          </div>
+
+          <div class="min-w-0 p-6 font-mono text-small leading-relaxed break-words">
+            <p class="text-accent">$ cd /page-not-found</p>
+            <p class="text-body">bash: cd: /page-not-found: No such file or directory</p>
+            <p><a href="/">Back to /</a></p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <Footer />
+    <CommandPalette />
+  </body>
+</html>

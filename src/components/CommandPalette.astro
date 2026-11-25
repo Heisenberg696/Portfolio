@@ -1,0 +1,276 @@
+---
+import { siteConfig } from "../config";
+
+type Command = {
+  id: string;
+  label: string;
+  type: "scroll" | "link" | "copy";
+  target?: string;
+  href?: string;
+  value?: string;
+};
+
+const commands: Command[] = [
+  { id: "about", label: "Go to About", type: "scroll", target: "#about" },
+  { id: "experience", label: "Go to Experience", type: "scroll", target: "#experience" },
+  { id: "projects", label: "Go to Projects", type: "scroll", target: "#projects" },
+  { id: "skills", label: "Go to Skills", type: "scroll", target: "#skills" },
+  { id: "education", label: "Go to Education", type: "scroll", target: "#education" },
+  { id: "contact", label: "Go to Contact", type: "scroll", target: "#contact" },
+];
+
+if (siteConfig.social.github) {
+  commands.push({ id: "github", label: "Open GitHub", type: "link", href: siteConfig.social.github });
+}
+
+if (siteConfig.social.linkedin) {
+  commands.push({ id: "linkedin", label: "Open LinkedIn", type: "link", href: siteConfig.social.linkedin });
+}
+
+if (siteConfig.social.email) {
+  commands.push({ id: "email", label: "Copy email", type: "copy", value: siteConfig.social.email });
+}
+
+commands.push({ id: "resume", label: "Open resume", type: "link", href: siteConfig.resumeUrl });
+---
+
+<dialog class="command-palette" aria-label="Command menu">
+  <div class="border-b border-line">
+    <input
+      class="command-input font-mono text-small"
+      type="text"
+      placeholder="Type a command"
+      aria-label="Type a command"
+      aria-controls="command-list"
+      aria-activedescendant="command-option-0"
+      autocomplete="off"
+    />
+  </div>
+
+  <ul id="command-list" class="command-list" role="listbox" aria-label="Commands">
+    {commands.map((command, index) => (
+      <li
+        id={`command-option-${index}`}
+        class="command-item"
+        role="option"
+        aria-selected={index === 0 ? "true" : "false"}
+        data-index={index}
+        data-type={command.type}
+        data-target={command.target ?? ""}
+        data-href={command.href ?? ""}
+        data-value={command.value ?? ""}
+        data-label={command.label}
+      >
+        <span data-command-label>{command.label}</span>
+      </li>
+    ))}
+  </ul>
+</dialog>
+
+<script is:inline>
+  (() => {
+    const dialog = document.querySelector("dialog.command-palette");
+    const input = dialog?.querySelector(".command-input");
+    const list = dialog?.querySelector("#command-list");
+    if (!(dialog instanceof HTMLDialogElement) || !(input instanceof HTMLInputElement) || !list) return;
+
+    const items = Array.from(list.querySelectorAll('[role="option"]'));
+    let visibleItems = items;
+    let selected = 0;
+    let lastFocused = null;
+
+    const isEditable = (target) =>
+      target instanceof HTMLElement &&
+      (target.isContentEditable || ["INPUT", "TEXTAREA", "SELECT"].includes(target.tagName));
+
+    const setActive = () => {
+      items.forEach((item) => {
+        const active = item === visibleItems[selected];
+        item.setAttribute("aria-selected", active ? "true" : "false");
+      });
+
+      const activeItem = visibleItems[selected];
+      if (activeItem) {
+        input.setAttribute("aria-activedescendant", activeItem.id);
+        activeItem.scrollIntoView({ block: "nearest" });
+      } else {
+        input.removeAttribute("aria-activedescendant");
+      }
+    };
+
+    const filterCommands = () => {
+      const query = input.value.trim().toLowerCase();
+      visibleItems = items.filter((item) => item.dataset.label.toLowerCase().includes(query));
+      selected = 0;
+      items.forEach((item) => { item.hidden = !visibleItems.includes(item); });
+      setActive();
+    };
+
+    const runCommand = (item) => {
+      const type = item.dataset.type;
+
+      if (type === "scroll") {
+        const target = document.querySelector(item.dataset.target);
+        dialog.close();
+        target?.scrollIntoView({
+          behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+          block: "start",
+        });
+        return;
+      }
+
+      if (type === "link") {
+        if (item.dataset.href) window.open(item.dataset.href, "_blank", "noopener,noreferrer");
+        dialog.close();
+        return;
+      }
+
+      if (type === "copy") {
+        if (navigator.clipboard && typeof navigator.clipboard.writeText === "function") {
+          navigator.clipboard.writeText(item.dataset.value ?? "").catch(() => {});
+        }
+
+        const label = item.querySelector("[data-command-label]");
+        if (label) label.textContent = "Copied";
+        dialog.close();
+        setTimeout(() => {
+          if (label) label.textContent = item.dataset.label;
+        }, 1500);
+      }
+    };
+
+    const open = () => {
+      lastFocused = document.activeElement;
+      input.value = "";
+      filterCommands();
+      if (!dialog.open) dialog.showModal();
+      input.focus();
+    };
+
+    input.addEventListener("input", filterCommands);
+
+    input.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowDown" && visibleItems.length > 0) {
+        event.preventDefault();
+        selected = (selected + 1) % visibleItems.length;
+        setActive();
+      } else if (event.key === "ArrowUp" && visibleItems.length > 0) {
+        event.preventDefault();
+        selected = (selected - 1 + visibleItems.length) % visibleItems.length;
+        setActive();
+      } else if (event.key === "Enter" && visibleItems[selected]) {
+        event.preventDefault();
+        runCommand(visibleItems[selected]);
+      }
+    });
+
+    items.forEach((item) => {
+      item.addEventListener("click", () => runCommand(item));
+      item.addEventListener("mousemove", () => {
+        const index = visibleItems.indexOf(item);
+        if (index >= 0 && index !== selected) {
+          selected = index;
+          setActive();
+        }
+      });
+    });
+
+    dialog.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        dialog.close();
+      }
+    });
+
+    dialog.addEventListener("click", (event) => {
+      const rect = dialog.getBoundingClientRect();
+      const outside =
+        event.clientX < rect.left ||
+        event.clientX > rect.right ||
+        event.clientY < rect.top ||
+        event.clientY > rect.bottom;
+
+      if (outside) dialog.close();
+    });
+
+    dialog.addEventListener("close", () => {
+      if (lastFocused instanceof HTMLElement && document.contains(lastFocused)) {
+        lastFocused.focus({ preventScroll: true });
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      const key = event.key.toLowerCase();
+
+      if ((event.metaKey || event.ctrlKey) && key === "k") {
+        event.preventDefault();
+        open();
+        return;
+      }
+
+      if (
+        key === "/" &&
+        !event.metaKey &&
+        !event.ctrlKey &&
+        !event.altKey &&
+        !event.shiftKey &&
+        !isEditable(event.target)
+      ) {
+        event.preventDefault();
+        open();
+      }
+    });
+  })();
+</script>
+
+<style>
+  .command-palette {
+    width: min(520px, calc(100vw - 2rem));
+    max-width: 520px;
+    margin: auto;
+    padding: 0;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background-color: var(--surface);
+    color: var(--body);
+    box-shadow: 0 0 40px var(--accent-glow);
+  }
+
+  .command-palette::backdrop {
+    background-color: rgb(0 0 0 / 0.6);
+  }
+
+  .command-input {
+    width: 100%;
+    border: 0;
+    background-color: transparent;
+    padding: 1rem;
+    color: var(--text);
+    outline: none;
+  }
+
+  .command-input:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: -2px;
+  }
+
+  .command-list {
+    max-height: min(60vh, 360px);
+    overflow-y: auto;
+    padding: 0.5rem;
+  }
+
+  .command-item {
+    border-radius: 6px;
+    padding: 0.5rem 0.75rem;
+    color: var(--body);
+    font-size: 0.875rem;
+    line-height: 1.4;
+    cursor: pointer;
+  }
+
+  .command-item[aria-selected="true"] {
+    background-color: var(--accent-wash);
+    color: var(--text);
+  }
+</style>

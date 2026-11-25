@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://portfolio-ochre-two-3v1us6f0or.vercel.app/sitemap-index.xml

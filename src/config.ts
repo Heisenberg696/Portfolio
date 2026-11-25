@@ -5,15 +5,18 @@ interface ExperienceEntry {
   description: string;
   responsibilities: string[];
   type?: string;
+  tech?: string[];
 }
 
 export const siteConfig = {
   name: "Swallieu Dawud",
-  title: "Software Engineer",
-  tagline: "Building Digital Solutions That Matter",
+  title: "Swallieu Dawud | Software Engineer",
+  tagline: "Back-end-focused full-stack software engineer",
   description:
-    "Portfolio website of Swallieu Dawud - Full Stack Developer specializing in MERN stack and modern web technologies",
+    "Back-end-focused full-stack software engineer in Accra, Ghana. Node.js, Django, MongoDB, PostgreSQL, Docker. Building payment, hosting and delivery platforms.",
   resumeUrl: "/Swallieu_Dawud_CV.pdf",
+  url: "https://portfolio-ochre-two-3v1us6f0or.vercel.app",
+  available: true,
 
   // Theme colors
   colors: {
@@ -52,7 +55,6 @@ export const siteConfig = {
         "Responsive Design",
         "UI/UX Implementation",
       ],
-      description: "Building beautiful, performant user interfaces",
     },
     backend: {
       title: "Backend Development",
@@ -76,22 +78,6 @@ export const siteConfig = {
         "Postman",
         "GraphQL",
       ],
-      description: "Architecting robust server-side solutions",
-    },
-    innovation: {
-      title: "Innovation & Leadership",
-      icon: "lightbulb",
-      skills: [
-        "Technical Strategy",
-        "Solution Architecture",
-        "Team Collaboration",
-        "Agile Methodologies",
-        "Mentoring",
-        "Problem Solving",
-        "Project Management",
-        "Code Review",
-      ],
-      description: "Leading teams and driving technical excellence",
     },
     other: {
       title: "Tools & Technologies",
@@ -126,7 +112,7 @@ export const siteConfig = {
       link: "https://voxta.vercel.app/",
       demoVideo: "https://youtu.be/obATx2SI1aA",
       github: "https://github.com/Heisenberg696/voxta",
-      image: "/images/voxta.png",
+      image: "/images/voxta.webp",
       skills: [
         "React",
         "Node.js",
@@ -159,7 +145,7 @@ export const siteConfig = {
       link: "https://handi-three.vercel.app/",
       demoVideo: "https://youtu.be/mnTghdKf4gk",
       github: "https://github.com/Heisenberg696/handi",
-      image: "/images/handi.png",
+      image: "/images/handi.webp",
       skills: [
         "React",
         "Node.js",
@@ -192,7 +178,7 @@ export const siteConfig = {
       demoVideo: "",
       github: "https://github.com/Heisenberg696/afrotales",
       githubClickable: false, // Special flag to disable link for this project
-      image: "/images/afrotales.png",
+      image: "/images/afrotales.webp",
       skills: ["React", "Firebase", "Firestore", "Tailwind CSS"],
       technologies: ["React", "Firebase", "Firestore", "Tailwind CSS"],
       featured: true,
@@ -215,6 +201,7 @@ export const siteConfig = {
         "Improved SEO (sitemap, structured data, per-page metadata) and consent-gated analytics, and reduced hero image sizes by 88% to speed up page loads.",
         "Deployed to a Linux VPS with Docker Compose, Nginx and Let's Encrypt HTTPS. GitHub Actions pipelines gate every merge on linting, automated tests (2,300+ backend test cases, 170+ frontend test files) and a build, then deploy over SSH with automated health checks.",
       ],
+      tech: ["Node.js", "Express", "MongoDB", "Next.js", "Docker", "Nginx", "GitHub Actions", "Paystack"],
     },
     {
       company: "Apsel",
@@ -229,6 +216,7 @@ export const siteConfig = {
         "Aligned Dispatch's data model with the web platform through shared Firestore collections and read-time joins, eliminating duplicated data, and validated the full delivery workflow against live Firestore data.",
         "On mobile, implemented Google Sign-In, FCM push notifications, offline caching with automatic retry of failed operations, and PDF/Excel transaction exports. On web, added operating hours, a map-based store location picker and scheduled support meetings.",
       ],
+      tech: ["React", "TypeScript", "Firebase", "Flutter"],
     },
     {
       company: "CLA 360",
@@ -241,6 +229,7 @@ export const siteConfig = {
         "Collaborated with cross-functional engineers to integrate the Credential Wallet as a standalone module within the wider CLA 360 platform.",
         "Built and maintained core frontend features for CLA 360 using React, Next.js, TypeScript, and Zustand, ensuring scalability and clean state management.",
       ],
+      tech: ["React", "Next.js", "TypeScript", "Zustand"],
     },
     {
       company: "Solfa Africa",
@@ -253,6 +242,7 @@ export const siteConfig = {
         "Built a scalable Next.js frontend using SSR/SSG for performance, modular components for maintainability and responsive design for multi-device accessibility.",
         "Integrated frontend and backend services, reducing response times through query optimisation, and wrote unit and integration tests to keep the API stable and prevent regressions.",
       ],
+      tech: ["Django REST Framework", "Next.js"],
     },
     {
       company: "BOST Energies Limited Company",
@@ -264,6 +254,7 @@ export const siteConfig = {
         "Configured and deployed Microsoft Dynamics 365 and supported staff with navigation, data entry and day-to-day system usage.",
         "Provided IT technical support to staff and management, minimizing downtime.",
       ],
+      tech: ["Microsoft Dynamics 365"],
     },
     {
       company: "Omlac Group",

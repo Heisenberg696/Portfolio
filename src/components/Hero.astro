@@ -1,112 +1,162 @@
 ---
-import SocialLinks from "./SocialLinks.astro";
 import { siteConfig } from "../config";
+
+const currentCompanies = siteConfig.experience
+  .filter((exp) => exp.dateRange.trimEnd().endsWith("Present"))
+  .map((exp) => exp.company);
 ---
 
-<section id="hero" class="relative min-h-screen flex items-center px-6 md:px-12 lg:px-24 max-w-[1600px] mx-auto pt-20">
-  <div class="w-full max-w-5xl">
-    
-    {/* Small greeting text */}
-    <p class="text-[#64ffda] font-mono text-base md:text-lg mb-8 animate-fade-in" style="animation-delay: 0.1s;">
-      Hi, my name is
-    </p>
+<section id="hero" class="hero-section relative isolate mx-auto w-full max-w-[720px] px-5 py-8">
+  <h1 class="sr-only">{siteConfig.name}, {siteConfig.title}</h1>
 
-    {/* HUGE name - matching reference */}
-    <h1 class="mb-6 animate-fade-in" style="animation-delay: 0.2s;">
-      <span class="block text-[clamp(40px,8vw,80px)] font-bold leading-[1.1] text-white tracking-tight mb-2">
-        Swallieu
-      </span>
-      <span class="block text-[clamp(40px,8vw,80px)] font-bold leading-[1.1] text-[#64ffda] tracking-tight">
-        Dawud
-      </span>
-    </h1>
+  <script is:inline>
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      document.documentElement.classList.add("has-terminal-animation");
+    }
+  </script>
 
-    {/* Tagline */}
-    <h2 class="text-[clamp(20px,4vw,28px)] font-semibold leading-[1.3] text-[#a8b2d1] mb-8 max-w-3xl animate-fade-in" style="animation-delay: 0.3s;">
-      Architecting Innovation & Engineering Excellence
-    </h2>
-
-    {/* Description paragraph */}
-    <p class="text-base md:text-lg text-[#a8b2d1] leading-relaxed max-w-2xl mb-12 animate-fade-in" style="animation-delay: 0.4s;">
-      Transforming complex challenges into elegant, high-impact digital solutions. 
-      Passionate about leveraging advanced technology, strategic thinking, and creative 
-      problem-solving to deliver world-class products.
-    </p>
-
-    {/* CTA Buttons */}
-    <div class="flex flex-wrap gap-4 mb-16 animate-fade-in" style="animation-delay: 0.5s;">
-      <a
-        href="#contact"
-        class="inline-flex items-center gap-2 px-8 py-4 bg-[#64ffda] hover:bg-[#52d4ba] text-[#0f1419] font-bold rounded-lg transition-all text-base shadow-lg shadow-[#64ffda]/20 hover:shadow-xl hover:shadow-[#64ffda]/30"
-      >
-        <span>Hire Me</span>
-      </a>
-      
-      <a
-        href="#projects"
-        class="inline-flex items-center gap-2 px-8 py-4 bg-transparent border-2 border-[#64ffda] text-[#64ffda] hover:bg-[#64ffda]/10 font-bold rounded-lg transition-all text-base"
-      >
-        <span>View Work</span>
-      </a>
+  <div
+    data-terminal
+    role="region"
+    aria-label="Terminal showing identity, role, stack, current work and links"
+    class="overflow-hidden rounded-lg border border-accent-line bg-surface shadow-[0_0_40px_var(--accent-glow)]"
+  >
+    <div class="flex items-center gap-2 border-b border-line px-6 py-3">
+      <span class="h-2 w-2 rounded-full bg-muted" aria-hidden="true"></span>
+      <span class="h-2 w-2 rounded-full bg-muted" aria-hidden="true"></span>
+      <span class="h-2 w-2 rounded-full bg-muted" aria-hidden="true"></span>
+      <span class="ml-2 font-mono text-small text-muted">~/portfolio</span>
     </div>
 
-    {/* Social Links */}
-    <div class="animate-fade-in" style="animation-delay: 0.6s;">
-      <SocialLinks social={siteConfig.social} />
+    <div class="min-w-0 p-6 font-mono text-small leading-relaxed break-words">
+      <div data-line="command" class="text-accent">
+        <span>$</span> <span data-typed>whoami</span><span data-cursor aria-hidden="true"></span>
+      </div>
+      <div data-line="output" class="text-ink">{siteConfig.name}</div>
+
+      <div data-line="command" class="text-accent">
+        <span>$</span> <span data-typed>cat role.txt</span><span data-cursor aria-hidden="true"></span>
+      </div>
+      <div data-line="output" class="text-ink">{siteConfig.tagline}</div>
+
+      <div data-line="command" class="text-accent">
+        <span>$</span> <span data-typed>ls stack/</span><span data-cursor aria-hidden="true"></span>
+      </div>
+      <div data-line="output" class="whitespace-pre-wrap text-ink">Node.js  Express  MongoDB  PostgreSQL  Django  React  Docker</div>
+
+      <div data-line="command" class="text-accent">
+        <span>$</span> <span data-typed>cat status.txt</span><span data-cursor aria-hidden="true"></span>
+      </div>
+      <div data-line="output" class="text-ink">Currently building at {currentCompanies.join(" and ")}</div>
+      <div data-line="output" class="text-ink">Accra, Ghana</div>
+
+      <div data-line="command" class="text-accent">
+        <span>$</span> <span data-typed>open links</span><span data-cursor aria-hidden="true"></span>
+      </div>
+      <div data-line="output" class="flex flex-wrap gap-x-4 gap-y-1">
+        <a class="link-plain" href={siteConfig.social.github} target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a class="link-plain" href={siteConfig.social.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a class="link-plain" href={`mailto:${siteConfig.social.email}`}>Email</a>
+        <a class="link-plain" href={siteConfig.resumeUrl} target="_blank" rel="noopener noreferrer">Resume</a>
+      </div>
     </div>
   </div>
 
-  {/* Decorative Elements - matching reference */}
-  <div class="absolute left-8 top-1/3 hidden lg:block animate-fade-in opacity-20 hover:opacity-40 transition-opacity" style="animation-delay: 0.7s;">
-    <svg class="w-20 h-20 text-[#64ffda]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-    </svg>
-  </div>
+  {siteConfig.available && (
+    <p class="mt-4 font-mono text-small text-muted">
+      <span class="availability-dot mr-2 inline-block h-2 w-2 rounded-full bg-available align-middle" aria-hidden="true"></span>
+      Open to new opportunities
+    </p>
+  )}
 
-  <div class="absolute right-8 bottom-32 hidden lg:block animate-fade-in opacity-20 hover:opacity-40 transition-opacity" style="animation-delay: 0.8s;">
-    <svg class="w-24 h-24 text-[#64ffda]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
-    </svg>
-  </div>
+  <script is:inline>
+    (() => {
+      if (!document.documentElement.classList.contains("has-terminal-animation")) return;
 
-  {/* Scroll indicator */}
-  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-fade-in hidden md:flex" style="animation-delay: 0.9s;">
-    <a href="#about" class="flex flex-col items-center gap-2 text-[#717c99] hover:text-[#64ffda] transition-colors group">
-      <span class="text-xs font-mono uppercase tracking-wider">Scroll Down</span>
-      <svg class="w-6 h-6 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-      </svg>
-    </a>
-  </div>
+      const terminal = document.querySelector("[data-terminal]");
+      if (!terminal) return;
+
+      const lines = Array.from(terminal.querySelectorAll("[data-line]"));
+      const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+      (async () => {
+        await wait(100);
+
+        for (const line of lines) {
+          line.classList.add("is-visible");
+
+          if (line.getAttribute("data-line") === "command") {
+            const typed = line.querySelector("[data-typed]");
+            const text = typed.textContent || "";
+            line.classList.add("is-typing");
+
+            for (let count = 1; count <= text.length; count++) {
+              typed.style.width = `${count}ch`;
+              await wait(35);
+            }
+
+            typed.style.width = "auto";
+            line.classList.remove("is-typing");
+            await wait(180);
+          } else {
+            await wait(120);
+          }
+        }
+
+        terminal.setAttribute("data-complete", "");
+      })();
+    })();
+  </script>
 </section>
 
-<style>
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .animate-fade-in {
-    animation: fadeIn 0.8s ease-out forwards;
+<style is:global>
+  .has-terminal-animation [data-line] {
     opacity: 0;
   }
 
-  @keyframes bounce {
-    0%, 100% {
-      transform: translateY(0);
-    }
+  .has-terminal-animation [data-line].is-visible {
+    opacity: 1;
+  }
+
+  .has-terminal-animation [data-typed] {
+    display: inline-block;
+    width: 0;
+    overflow: hidden;
+    white-space: pre;
+    vertical-align: bottom;
+  }
+
+  [data-cursor] {
+    display: none;
+  }
+
+  .has-terminal-animation [data-line].is-typing [data-cursor] {
+    display: inline-block;
+    width: 0.6em;
+    height: 1em;
+    margin-left: 0.1em;
+    background-color: var(--accent);
+    vertical-align: -0.15em;
+    animation: terminal-cursor-blink 1s steps(2, start) infinite;
+  }
+
+  @keyframes terminal-cursor-blink {
     50% {
-      transform: translateY(-10px);
+      opacity: 0;
     }
   }
 
-  .animate-bounce {
-    animation: bounce 2s infinite;
+  @media (prefers-reduced-motion: reduce) {
+    [data-line] {
+      opacity: 1 !important;
+    }
+
+    [data-typed] {
+      width: auto !important;
+    }
+
+    [data-cursor] {
+      display: none !important;
+    }
   }
 </style>

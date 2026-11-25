@@ -1,9 +1,19 @@
+interface ExperienceEntry {
+  company: string;
+  title: string;
+  dateRange: string;
+  description: string;
+  responsibilities: string[];
+  type?: string;
+}
+
 export const siteConfig = {
   name: "Swallieu Dawud",
   title: "Software Engineer",
   tagline: "Building Digital Solutions That Matter",
   description:
     "Portfolio website of Swallieu Dawud - Full Stack Developer specializing in MERN stack and modern web technologies",
+  resumeUrl: "/Swallieu_Dawud_CV.pdf",
 
   // Theme colors
   colors: {
@@ -20,7 +30,7 @@ export const siteConfig = {
   },
 
   aboutMe:
-    "I'm a passionate Software Engineer and recent Computer Science graduate from Ashesi University with hands-on experience building scalable full-stack applications. I specialize in the MERN stack and modern web technologies, with a strong foundation in backend API development, frontend architecture, and cloud deployment. My work spans from building local service marketplaces to cultural media platforms, always with a focus on creating meaningful solutions that bridge technology and real-world needs.",
+    "I'm a back-end-focused full-stack software engineer with 2+ years of experience building production web systems using Node.js/Express, Django REST and MongoDB/PostgreSQL. I design RESTful APIs and third-party integrations (Paystack, Namecheap, WHM/cPanel, Firebase), secure payment and webhook flows, and deploy to Linux servers with Docker, Nginx and CI/CD. I'm comfortable on the front end with JavaScript, HTML/CSS and React when needed.",
 
   // Reorganized skills by category
   skillCategories: {
@@ -28,12 +38,17 @@ export const siteConfig = {
       title: "Frontend Development",
       icon: "code",
       skills: [
-        "React.js",
+        "React",
         "Next.js",
         "TypeScript",
         "JavaScript",
+        "Redux",
+        "Zustand",
         "Tailwind CSS",
-        "HTML5/CSS3",
+        "HTML5",
+        "CSS3",
+        "Flutter",
+        "Leaflet",
         "Responsive Design",
         "UI/UX Implementation",
       ],
@@ -46,11 +61,20 @@ export const siteConfig = {
         "Node.js",
         "Express.js",
         "Django",
+        "Django REST Framework",
         "Python",
-        "REST APIs",
-        "GraphQL",
+        "PostgreSQL",
+        "SQL",
+        "MongoDB",
+        "Firebase (Auth, Firestore, Storage, Hosting, App Check)",
+        "MySQL",
+        "RESTful API design",
         "JWT Authentication",
         "Socket.io",
+        "webhook security",
+        "third-party API integration (Paystack, Namecheap)",
+        "Postman",
+        "GraphQL",
       ],
       description: "Architecting robust server-side solutions",
     },
@@ -72,37 +96,26 @@ export const siteConfig = {
     other: {
       title: "Tools & Technologies",
       skills: [
-        "MongoDB",
-        "MySQL",
+        "Linux",
+        "Docker",
+        "Docker Compose",
+        "Nginx",
+        "SSH",
+        "DNS",
+        "SSL/TLS",
+        "GitHub Actions (CI/CD)",
         "Git/GitHub",
+        "Git workflow",
+        "automated testing",
+        "OpenCV",
+        "TensorFlow",
+        "Scikit-learn",
         "Jest",
-        "Postman",
         "Websockets",
-        "Firebase",
         "Cloudinary",
-        "Flutter/Dart",
       ],
     },
   },
-
-  // Legacy skills array (for backward compatibility)
-  skills: [
-    "JavaScript",
-    "Python",
-    "Java",
-    "TypeScript",
-    "React.js",
-    "Next.js",
-    "Node.js",
-    "Express.js",
-    "Django",
-    "MongoDB",
-    "MySQL",
-    "Flutter/Dart",
-    "Socket.io",
-    "JWT",
-    "REST APIs",
-  ],
 
   projects: [
     {
@@ -188,11 +201,41 @@ export const siteConfig = {
 
   experience: [
     {
+      company: "EazWorld",
+      title: "Software Engineer",
+      dateRange: "June 2026 - Present",
+      description:
+        "Co-developed a production web hosting, domain registration and e-commerce platform with an Express/MongoDB REST API and a Next.js 14 frontend.",
+      responsibilities: [
+        "Co-developed the platform's Express/MongoDB REST API (330+ endpoints, 47 data models, 9 scheduled background jobs) and a Next.js 14 frontend (110+ pages).",
+        "Integrated 12 third-party services via REST APIs and webhooks, including Paystack (card and Mobile Money), Namecheap (domains), WHM/cPanel (automated hosting provisioning), Cloudinary, Resend, Arkesel SMS, Google sign-in and Google Maps, plus Anthropic Claude for AI-assisted customer chat.",
+        "Hardened the payments flow with HMAC-SHA512 webhook signature verification, alerting on unmatched webhooks, refund review for payments on cancelled orders, automatic recovery of stranded paid orders, and a reconciliation job, admin API and dashboard that flag customers who were charged but not served.",
+        "Fixed a race condition that let concurrent webhooks provision the same hosting account twice, using atomic, idempotent payment claims, and moved all bundled-domain and add-on pricing server-side so client-submitted prices are never trusted.",
+        "Completed security hardening: Helmet/CSP, rate limiting, Zod input validation and sanitisation, append-only audit logging, OTP rate limiting, superadmin account protection and honeypot spam protection.",
+        "Improved SEO (sitemap, structured data, per-page metadata) and consent-gated analytics, and reduced hero image sizes by 88% to speed up page loads.",
+        "Deployed to a Linux VPS with Docker Compose, Nginx and Let's Encrypt HTTPS. GitHub Actions pipelines gate every merge on linting, automated tests (2,300+ backend test cases, 170+ frontend test files) and a build, then deploy over SSH with automated health checks.",
+      ],
+    },
+    {
+      company: "Apsel",
+      title: "Software Engineer",
+      dateRange: "May 2026 - Present",
+      description:
+        "Built a delivery management system and co-developed a vendor platform across React/TypeScript, Firebase and Flutter.",
+      responsibilities: [
+        "Built Apsel Dispatch (React/TypeScript, Firebase): a delivery management system with a 7-tab dispatcher dashboard and a mobile-first courier app, featuring live SLA tracking, rider assignment, route planning and CSV reports.",
+        "Implemented a 10-status delivery lifecycle with code and photo proof of delivery, cancellations and returns, role-based access, and email (dispatcher) and phone OTP (courier) login.",
+        "Co-developed the Apsel vendor platform: a 46-page React/TypeScript web dashboard (38 Firestore collections) and a 49-screen Flutter app covering order management, inventory, sales analytics, Paystack subscription billing, 3-tier KYC and WhatsApp commerce onboarding.",
+        "Aligned Dispatch's data model with the web platform through shared Firestore collections and read-time joins, eliminating duplicated data, and validated the full delivery workflow against live Firestore data.",
+        "On mobile, implemented Google Sign-In, FCM push notifications, offline caching with automatic retry of failed operations, and PDF/Excel transaction exports. On web, added operating hours, a map-based store location picker and scheduled support meetings.",
+      ],
+    },
+    {
       company: "CLA 360",
       title: "Software Engineer",
-      dateRange: "October 2025 - Present",
+      dateRange: "October 2025 - March 2026",
       description:
-        "Contributed in building a scalable full stack application React and php",
+        "Built a Credential Wallet module and core frontend features for a scalable full-stack platform using React, Next.js and TypeScript.",
       responsibilities: [
         "Developed a Credential Wallet that enables students to securely store and verify academic documents and transcripts.",
         "Collaborated with cross-functional engineers to integrate the Credential Wallet as a standalone module within the wider CLA 360 platform.",
@@ -206,19 +249,20 @@ export const siteConfig = {
       description:
         "Built scalable full-stack applications with Django and Next.js",
       responsibilities: [
-        "Designed RESTful Django APIs with well-structured data models, authentication and optimized query performance",
-        "Built scalable frontend in Next.js using SSR/SSG for performance, modular components for maintainability, and responsive design",
-        "Integrated frontend and backend services seamlessly with comprehensive testing and optimization",
+        "Designed and maintained production-grade Django REST APIs with authentication, authorization and optimised database queries.",
+        "Built a scalable Next.js frontend using SSR/SSG for performance, modular components for maintainability and responsive design for multi-device accessibility.",
+        "Integrated frontend and backend services, reducing response times through query optimisation, and wrote unit and integration tests to keep the API stable and prevent regressions.",
       ],
     },
     {
-      company: "BOST Company Limited",
+      company: "BOST Energies Limited Company",
       title: "IT Consultant",
-      dateRange: "Oct 2024 - Jun 2025",
-      description: "Provided technical support and system deployment",
+      dateRange: "Oct 2024 - Apr 2025",
+      description:
+        "Deployed Microsoft Dynamics 365 and provided day-to-day IT support to staff and management.",
       responsibilities: [
-        "Configured and deployed Microsoft Dynamics 365, assisting employees in navigation and system usage",
-        "Provided day-to-day IT technical support to staff and management ensuring minimal downtime",
+        "Configured and deployed Microsoft Dynamics 365 and supported staff with navigation, data entry and day-to-day system usage.",
+        "Provided IT technical support to staff and management, minimizing downtime.",
       ],
     },
     {
@@ -232,7 +276,7 @@ export const siteConfig = {
         "Collaborated with stakeholders to align UI/UX with branding goals",
       ],
     },
-  ],
+  ] satisfies ExperienceEntry[],
 
   education: [
     {

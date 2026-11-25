@@ -62,7 +62,7 @@ const hasExperience = siteConfig.experience && siteConfig.experience.length > 0;
                     {/* Badge for employment type */}
                     <div class="flex-shrink-0">
                       <span class="inline-flex items-center px-3 py-1.5 bg-[#64ffda]/10 border border-[#64ffda]/30 rounded-full text-[#64ffda] text-xs font-bold uppercase tracking-wider">
-                        Full-time
+                        {exp.type ?? "Full-time"}
                       </span>
                     </div>
                   </div>
@@ -107,7 +107,7 @@ const hasExperience = siteConfig.experience && siteConfig.experience.length > 0;
       {/* Call to Action */}
       <div class="mt-16 text-center">
         <a
-          href="/Swallieu_Dawud_(CV)(1).pdf"
+          href={siteConfig.resumeUrl}
           target="_blank"
           rel="noopener noreferrer"
           class="inline-flex items-center gap-3 px-8 py-4 border-2 border-[#64ffda] text-[#64ffda] hover:bg-[#64ffda]/10 font-semibold rounded-lg transition-all text-base group"

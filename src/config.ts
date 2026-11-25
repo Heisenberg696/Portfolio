@@ -10,10 +10,10 @@ interface ExperienceEntry {
 
 export const siteConfig = {
   name: "Swallieu Dawud",
-  title: "Swallieu Dawud | Software Engineer",
-  tagline: "Back-end-focused full-stack software engineer",
+  title: "Swallieu Dawud | Full-Stack Software Engineer",
+  tagline: "Full-stack software engineer",
   description:
-    "Back-end-focused full-stack software engineer in Accra, Ghana. Node.js, Django, MongoDB, PostgreSQL, Docker. Building payment, hosting and delivery platforms.",
+    "Full-stack software engineer in Accra, Ghana. React, Next.js, Node.js, Express, Django, MongoDB, PostgreSQL, Docker. Building payment, hosting and delivery platforms.",
   resumeUrl: "/Swallieu_Dawud_CV.pdf",
   url: "https://portfolio-ochre-two-3v1us6f0or.vercel.app",
   available: true,
@@ -33,7 +33,7 @@ export const siteConfig = {
   },
 
   aboutMe:
-    "I'm a back-end-focused full-stack software engineer with 2+ years of experience building production web systems using Node.js/Express, Django REST and MongoDB/PostgreSQL. I design RESTful APIs and third-party integrations (Paystack, Namecheap, WHM/cPanel, Firebase), secure payment and webhook flows, and deploy to Linux servers with Docker, Nginx and CI/CD. I'm comfortable on the front end with JavaScript, HTML/CSS and React when needed.",
+    "I'm a full-stack software engineer with 2+ years of experience building production web systems with React, Next.js, Node.js/Express, Django REST and MongoDB/PostgreSQL. I design RESTful APIs and third-party integrations (Paystack, Namecheap, WHM/cPanel, Firebase), secure payment and webhook flows, and deploy to Linux servers with Docker, Nginx and CI/CD. I build across the stack, from React and Next.js interfaces to the APIs, databases and Linux servers behind them, and I focus on clean, reliable code that keeps systems running smoothly.",
 
   // Reorganized skills by category
   skillCategories: {
